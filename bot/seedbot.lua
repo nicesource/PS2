@@ -223,6 +223,7 @@ function create_config( )
     "owners",
     "arabic_lock",
     "set",
+    "support",
     "get",
     "broadcast",
     "invite",
