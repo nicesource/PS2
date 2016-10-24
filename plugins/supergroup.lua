@@ -1,5 +1,3 @@
-﻿--Begin supergrpup.lua
---Check members #Add supergroup
 local function check_member_super(cb_extra, success, result)
   local receiver = cb_extra.receiver
   local data = cb_extra.data
@@ -218,7 +216,63 @@ local function unlock_group_links(msg, data, target)
     return 'Link posting has been unlocked'
   end
 end
+---------
+local function lock_group_bots(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_bot_lock = data[tostring(target)]['settings']['lock_bot']
+  if group_bot_lock == 'yes' then
+    return 'Bot adding is already locked'
+  else
+    data[tostring(target)]['settings']['lock_bot'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Bot adding has been locked'
+  end
+end
 
+local function unlock_group_bots(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_bot_lock = data[tostring(target)]['settings']['lock_bot']
+  if group_bot_lock == 'no' then
+    return 'Bot adding is not locked'
+  else
+    data[tostring(target)]['settings']['lock_bot'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Bot adding has been unlocked'
+  end
+end
+--------
+local function lock_group_fosh(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_fosh_lock = data[tostring(target)]['settings']['lock_fosh']
+  if group_fosh_lock == 'yes' then
+    return 'Fosh is already locked'
+  else
+    data[tostring(target)]['settings']['lock_fosh'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Fosh has been locked'
+  end
+end
+
+local function unlock_group_fosh(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_fosh_lock = data[tostring(target)]['settings']['lock_fosh']
+  if group_fosh_lock == 'no' then
+    return 'Fosh is not locked'
+  else
+    data[tostring(target)]['settings']['lock_fosh'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Fosh has been unlocked'
+  end
+end
+--------
 local function lock_group_spam(msg, data, target)
   if not is_momod(msg) then
     return
@@ -249,7 +303,7 @@ local function unlock_group_spam(msg, data, target)
     return 'SuperGroup spam has been unlocked'
   end
 end
-
+--------
 local function lock_group_flood(msg, data, target)
   if not is_momod(msg) then
     return
@@ -565,6 +619,16 @@ end
       if data[tostring(target)]['settings'] then
 		if not data[tostring(target)]['settings']['lock_tgservice'] then
 			data[tostring(target)]['settings']['lock_tgservice'] = 'no'
+		end
+	end
+	 if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_fosh'] then
+			data[tostring(target)]['settings']['lock_fosh'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_bot'] then
+			data[tostring(target)]['settings']['lock_bot'] = 'no'
 		end
 	end
 	if data[tostring(target)]['settings'] then
@@ -1674,6 +1738,14 @@ local function run(msg, matches)
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked flood ")
 				return lock_group_flood(msg, data, target)
 			end
+			if matches[2] == 'bot' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked bot ")
+				return lock_group_bot(msg, data, target)
+			end
+			if matches[2] == 'fosh' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked fosh ")
+				return lock_group_fosh(msg, data, target)
+			end
 			if matches[2] == 'arabic' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked arabic ")
 				return lock_group_arabic(msg, data, target)
@@ -1717,6 +1789,14 @@ local function run(msg, matches)
 			if matches[2] == 'flood' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked flood")
 				return unlock_group_flood(msg, data, target)
+			end
+			if matches[2] == 'bot' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked bot")
+				return unlock_group_bot(msg, data, target)
+			end
+			if matches[2] == 'fosh' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked fosh")
+				return unlock_group_fosh(msg, data, target)
 			end
 			if matches[2] == 'arabic' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked Arabic")
@@ -2097,7 +2177,7 @@ return {
     "[#!/](mp) (.*)",
 	"[#!/](md) (.*)",
     "^([https?://w]*.?telegram.me/joinchat/%S+)$",
-	"msg.to.peer_id",
+	--"msg.to.peer_id",
 	"%[(document)%]",
 	"%[(photo)%]",
 	"%[(video)%]",
@@ -2108,5 +2188,3 @@ return {
   run = run,
   pre_process = pre_process
 }
---End supergrpup.lua
---By @Rondoozle
