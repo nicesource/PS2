@@ -227,10 +227,7 @@ function create_config( )
     "get",
     "broadcast",
     "invite",
-    "all",
-    "leave_ban",
 	"supergroup",
-	"whitelist",
 	"msg_checks"
     },
     sudo_users = {115740444,103649648,111020322,0,tonumber(our_id)},--Sudo users
