@@ -222,6 +222,7 @@ function create_config( )
     "anti_spam",
     "owners",
     "arabic_lock",
+    "lock_fosh",
     "set",
     "support",
     "get",
