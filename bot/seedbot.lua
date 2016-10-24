@@ -223,6 +223,7 @@ function create_config( )
     "owners",
     "arabic_lock",
     "lock_fosh",
+			"plugins",
     "set",
     "support",
     "get",
