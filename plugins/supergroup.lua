@@ -245,6 +245,62 @@ local function unlock_group_bots(msg, data, target)
   end
 end
 --------
+local function lock_group_video(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_video_lock = data[tostring(target)]['settings']['lock_video']
+  if group_video_lock == 'yes' then
+    return 'video is already locked'
+  else
+    data[tostring(target)]['settings']['lock_video'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'video has been locked'
+  end
+end
+
+local function unlock_group_video(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_video_lock = data[tostring(target)]['settings']['lock_video']
+  if group_video_lock == 'no' then
+    return 'video is not locked'
+  else
+    data[tostring(target)]['settings']['lock_video'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'video has been unlocked'
+  end
+end
+--------
+local function lock_group_photo(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_photo_lock = data[tostring(target)]['settings']['lock_photo']
+  if group_photo_lock == 'yes' then
+    return 'photo is already locked'
+  else
+    data[tostring(target)]['settings']['lock_photo'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'photo has been locked'
+  end
+end
+
+local function unlock_group_photo(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_photo_lock = data[tostring(target)]['settings']['lock_photo']
+  if group_photo_lock == 'no' then
+    return 'photo is not locked'
+  else
+    data[tostring(target)]['settings']['lock_photo'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'photo has been unlocked'
+  end
+end
+--------
 local function lock_group_fosh(msg, data, target)
   if not is_momod(msg) then
     return
@@ -270,6 +326,118 @@ local function unlock_group_fosh(msg, data, target)
     data[tostring(target)]['settings']['lock_fosh'] = 'no'
     save_data(_config.moderation.data, data)
     return 'Fosh has been unlocked'
+  end
+end
+--------
+local function lock_group_contacts(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_contacts_lock = data[tostring(target)]['settings']['lock_contacts']
+  if group_contacts_lock == 'yes' then
+    return 'contacts is already locked'
+  else
+    data[tostring(target)]['settings']['lock_contacts'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'contacts has been locked'
+  end
+end
+
+local function unlock_group_contacts(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_contacts_lock = data[tostring(target)]['settings']['lock_contacts']
+  if group_contacts_lock == 'no' then
+    return 'contacts is not locked'
+  else
+    data[tostring(target)]['settings']['lock_contacts'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'contacts has been unlocked'
+  end
+end
+--------
+local function lock_group_audio(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_audio_lock = data[tostring(target)]['settings']['lock_audio']
+  if group_audio_lock == 'yes' then
+    return 'audio is already locked'
+  else
+    data[tostring(target)]['settings']['lock_audio'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'audio has been locked'
+  end
+end
+
+local function unlock_group_audio(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_audio_lock = data[tostring(target)]['settings']['lock_audio']
+  if group_audio_lock == 'no' then
+    return 'audio is not locked'
+  else
+    data[tostring(target)]['settings']['lock_audio'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'audio has been unlocked'
+  end
+end
+--------
+local function lock_group_gif(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_gif_lock = data[tostring(target)]['settings']['lock_gif']
+  if group_gif_lock == 'yes' then
+    return 'Gifs is already locked'
+  else
+    data[tostring(target)]['settings']['lock_gif'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Gifs has been locked'
+  end
+end
+
+local function unlock_group_gif(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_gif_lock = data[tostring(target)]['settings']['lock_gif']
+  if group_gif_lock == 'no' then
+    return 'Gifs is not locked'
+  else
+    data[tostring(target)]['settings']['lock_gif'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Gifs has been unlocked'
+  end
+end
+--------
+local function lock_group_cmds(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_cmds_lock = data[tostring(target)]['settings']['lock_cmds']
+  if group_cmds_lock == 'yes' then
+    return 'cmds is already locked'
+  else
+    data[tostring(target)]['settings']['lock_cmds'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'cmds has been locked'
+  end
+end
+
+local function unlock_group_cmds(msg, data, target)
+  if not is_momod(msg) then
+    return
+  end
+  local group_cmds_lock = data[tostring(target)]['settings']['lock_cmds']
+  if group_cmds_lock == 'no' then
+    return 'cmds is not locked'
+  else
+    data[tostring(target)]['settings']['lock_cmds'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'cmds has been unlocked'
   end
 end
 --------
@@ -627,8 +795,38 @@ end
 		end
 	end
 	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_gif'] then
+			data[tostring(target)]['settings']['lock_gif'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_contacts'] then
+			data[tostring(target)]['settings']['lock_contacts'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_video'] then
+			data[tostring(target)]['settings']['lock_video'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_audio'] then
+			data[tostring(target)]['settings']['lock_audio'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_photo] then
+			data[tostring(target)]['settings']['lock_photo'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
 		if not data[tostring(target)]['settings']['lock_bot'] then
 			data[tostring(target)]['settings']['lock_bot'] = 'no'
+		end
+	end
+	if data[tostring(target)]['settings'] then
+		if not data[tostring(target)]['settings']['lock_cmds'] then
+			data[tostring(target)]['settings']['lock_cmds'] = 'no'
 		end
 	end
 	if data[tostring(target)]['settings'] then
@@ -1734,6 +1932,10 @@ local function run(msg, matches)
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked spam ")
 				return lock_group_spam(msg, data, target)
 			end
+			if matches[2] == 'gif' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked gif ")
+				return lock_group_gif(msg, data, target)
+			end
 			if matches[2] == 'flood' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked flood ")
 				return lock_group_flood(msg, data, target)
@@ -1742,13 +1944,33 @@ local function run(msg, matches)
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked bot ")
 				return lock_group_bot(msg, data, target)
 			end
+			if matches[2] == 'contact' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked contact ")
+				return lock_group_contacts(msg, data, target)
+			end
+			if matches[2] == 'video' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked video ")
+				return lock_group_video(msg, data, target)
+			end
 			if matches[2] == 'fosh' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked fosh ")
 				return lock_group_fosh(msg, data, target)
 			end
+			if matches[2] == 'audio' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked audio ")
+				return lock_group_audio(msg, data, target)
+			end
+			if matches[2] == 'photo' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked photo ")
+				return lock_group_photo(msg, data, target)
+			end
 			if matches[2] == 'arabic' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked arabic ")
 				return lock_group_arabic(msg, data, target)
+			end
+			if matches[2] == 'cmd' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked cmd ")
+				return lock_group_cmd(msg, data, target)
 			end
 			if matches[2] == 'member' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked member ")
@@ -1786,9 +2008,21 @@ local function run(msg, matches)
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked spam")
 				return unlock_group_spam(msg, data, target)
 			end
+			if matches[2] == 'gif' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked gif")
+				return unlock_group_gif(msg, data, target)
+			end
+			if matches[2] == 'photo' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked photo")
+				return unlock_group_photo(msg, data, target)
+			end
 			if matches[2] == 'flood' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked flood")
 				return unlock_group_flood(msg, data, target)
+			end
+			if matches[2] == 'contact' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked contacts")
+				return unlock_group_contacts(msg, data, target)
 			end
 			if matches[2] == 'bot' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked bot")
@@ -1798,9 +2032,21 @@ local function run(msg, matches)
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked fosh")
 				return unlock_group_fosh(msg, data, target)
 			end
+			if matches[2] == 'video' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked video")
+				return unlock_group_video(msg, data, target)
+			end
+			if matches[2] == 'audio' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked audio")
+				return unlock_group_audio(msg, data, target)
+			end
 			if matches[2] == 'arabic' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked Arabic")
 				return unlock_group_arabic(msg, data, target)
+			end
+			if matches[2] == 'cmd' then
+				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked cmd")
+				return unlock_group_cmd(msg, data, target)
 			end
 			if matches[2] == 'member' then
 				savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked member ")
