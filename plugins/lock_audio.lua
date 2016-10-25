@@ -17,8 +17,8 @@ local function run(msg, matches)
     end
     local chat = get_receiver(msg)
     local user = "user#id"..msg.from.id
-    if lock_ == "🔒" then
-        chat_del_user(chat, user, ok_cb, true)
+    if lock_audio == "yes" then
+       delete_msg(msg.id, ok_cb, true)
     end
 end
  
